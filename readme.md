@@ -60,11 +60,10 @@ Also ensure your provider block includes your credentials.
 ### How to Clone the Repository
 
 ```bash
-git clone https://github.com//auto-deployer.git
-cd 
-# 2. Install Dependencies
+git clone https://github.com/RAJUSKANDPAL/CSI-Azure-IAC.git
+cd CSI-Azure-IAC   
+# 2. Install Dependencies  
 ```
-
 npm install
 ``
 
