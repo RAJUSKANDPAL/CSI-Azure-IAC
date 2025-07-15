@@ -1,4 +1,5 @@
-# 🚀 Automated Web Hosting Solution with Single-Click Replication
+
+# 🚀 Automated Web Hosting Solution with Single-Click Replication - Rajus Kandpal (Cloud Infra Security Batch 2)    
 
 This project demonstrates a dynamic and scalable **Infrastructure as Code (IaC)** solution using **Terraform** and **Node.js**, enabling single-click deployments of web-hosting environments (Development, UACT, Production) on **Microsoft Azure**.
 
@@ -17,18 +18,18 @@ This project demonstrates a dynamic and scalable **Infrastructure as Code (IaC)*
 
 ## 📁 Project Structure
 
-auto-deployer/  
-├── public/ # Frontend HTML + CSS  
+auto-deployer/    
+├── public/    
 │ └── index.html  
-├── terraform/ # Terraform infrastructure files  
-│ ├── main.tf
-│ ├── variables.tf
-│ ├── dev.tfvars
-│ ├── uact.tfvars
-│ └── prod.tfvars
-├── server.js # Express backend to handle deployment
-├── package.json
-└── README.md # This file
+├── terraform/    
+│ ├── main.tf  
+│ ├── variables.tf  
+│ ├── dev.tfvars  
+│ ├── uact.tfvars  
+│ └── prod.tfvars  
+├── server.js    
+├── package.json  
+└── README.md    
 
 ---
 
@@ -41,19 +42,6 @@ auto-deployer/
   - SSH key pair
 - Basic knowledge of Azure networking & resources
 
----
-
-## 🚦 Setup Instructions
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/your-username/auto-deployer.git
-cd auto-deployer
-# 2. Install Dependencies
-```
-
-npm install
 ``
 
 # Configure Terraform Files
@@ -66,4 +54,37 @@ Environment name
 
 VM size, etc.
 
-Also ensure your provider block includes your credentials.
+Also ensure your provider block includes your credentials.  
+
+### How to Clone the Repository
+
+```bash
+git clone https://github.com//auto-deployer.git
+cd 
+# 2. Install Dependencies
+```
+
+npm install
+``
+
+# 🚀 How to Deploy  
+- Ensure you have Node.js installed.   
+- Navigate to the project directory:
+  ``` cd "envs and web app"```
+- Install dependencies:
+  ```npm install```
+- Start the server:
+  ``` node server.js```
+- After deployment, get the public IP address of your VM or hosting environment.
+
+---  
+# IMPORTANT NOTICE  
+After deployment, please wait for 1 minute before accessing the application.    
+
+When copying the IP address URL, make sure to:  
+
+Remove the s from https, so it becomes http  
+
+Example: change https://<your-ip> to http://<your-ip>  
+
+This ensures successful connection to the backend service running on the VM.  
