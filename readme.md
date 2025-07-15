@@ -1,5 +1,6 @@
-
-# 🚀 Automated Web Hosting Solution with Single-Click Replication - Rajus Kandpal (Cloud Infra Security Batch 2)    
+![](https://github.com/RAJUSKANDPAL/CSI-Azure-IAC/blob/e1dfe6da4509421cd576a1edb37a9d60afec213a/celabal.jpeg)
+# 🚀 Automated Web Hosting Solution with Single-Click Replication  
+- Rajus Kandpal (Cloud Infra Security Batch 2)    
 
 This project demonstrates a dynamic and scalable **Infrastructure as Code (IaC)** solution using **Terraform** and **Node.js**, enabling single-click deployments of web-hosting environments (Development, UACT, Production) on **Microsoft Azure**.
 
