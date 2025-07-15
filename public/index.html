@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Deploy Web Hosting</title>
+  <style>
+    :root {
+      --bg-color: #1e1e2f;
+      --text-color: #ffffff;
+      --card-bg: #2e2e3f;
+      --input-bg: #3e3e4f;
+      --button-bg: #27ae60;
+      --border-color: #555;
+    }
+
+    body.light {
+      --bg-color: #f2f4f8;
+      --text-color: #2c3e50;
+      --card-bg: #ffffff;
+      --input-bg: #ffffff;
+      --button-bg: #2980b9;
+      --border-color: #ccc;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      transition: all 0.3s ease;
+    }
+
+    .container {
+      background: var(--card-bg);
+      padding: 40px 50px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      max-width: 500px;
+      width: 100%;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    label {
+      font-weight: 600;
+    }
+
+    select, input[type="radio"] {
+      accent-color: var(--button-bg);
+    }
+
+    select {
+      width: 100%;
+      padding: 10px;
+      background: var(--input-bg);
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      background-color: var(--button-bg);
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .toggle-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: var(--text-color);
+      font-size: 14px;
+    }
+
+    #response {
+      margin-top: 30px;
+      padding: 15px;
+      background-color: var(--input-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 15px;
+      line-height: 1.5;
+      white-space: pre-line;
+    }
+  </style>
+</head>
+<body class="dark">
+  <div class="container">
+    <button class="toggle-btn" onclick="toggleTheme()">🌙 Dark Mode</button>
+
+    <h2>🚀 Deploy Hosting Solution</h2>
+    <form id="deploy-form">
+      <div style="margin-bottom: 20px;">
+        <label style="display: block; margin-bottom: 10px;">Choose Environment:</label>
+        <label style="margin-right: 15px;">
+          <input type="radio" name="environment" value="development" required> Development
+        </label>
+        <label style="margin-right: 15px;">
+          <input type="radio" name="environment" value="uact"> UACT
+        </label>
+        <label>
+          <input type="radio" name="environment" value="production"> Production
+        </label>
+      </div>
+
+      <div style="margin-bottom: 30px;">
+        <label style="display: block; margin-bottom: 10px;">Choose Azure Region:</label>
+        <select name="region" required>
+          <option value="">-- Select Region --</option>
+          <option value="centralindia">Central India</option>
+          <option value="eastus">East US</option>
+          <option value="westus">West US</option>
+          <option value="westeurope">West Europe</option>
+          <option value="southeastasia">Southeast Asia</option>
+        </select>
+      </div>
+
+      <button type="submit">Deploy</button>
+    </form>
+
+    <div id="response"></div>
+  </div>
+
+  <script>
+    function toggleTheme() {
+      const body = document.body;
+      const isDark = !body.classList.contains('light');
+      body.classList.toggle('light');
+      const btn = document.querySelector('.toggle-btn');
+      btn.textContent = isDark ? '☀️ Light Mode' : '🌙 Dark Mode';
+    }
+
+    document.getElementById('deploy-form').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const formData = new FormData(this);
+      const data = new URLSearchParams(formData);
+      const responseDiv = document.getElementById('response');
+
+      responseDiv.innerText = '⏳ Deploying infrastructure... Please wait...';
+
+      try {
+        const res = await fetch('/submit-deployment', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: data.toString(),
+        });
+
+        let result;
+        let isJson = res.headers.get('content-type')?.includes('application/json');
+        if (isJson) {
+          result = await res.json();
+        } else {
+          // Not JSON, get text for debugging
+          const text = await res.text();
+          console.error('Server response (not JSON):', text);
+          responseDiv.innerHTML = `
+            <div style="color: #e74c3c; font-weight: bold; margin-bottom: 15px;">
+              ❌ Deployment Failed
+            </div>
+            <div style="color: #e74c3c;">
+              An unexpected error occurred.
+            </div>
+            <div style="margin-top: 20px;">
+              <button onclick="location.reload()" style="background-color: var(--button-bg); color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer;">
+                Try Again
+              </button>
+            </div>
+          `;
+          return;
+        }
+        
+        if (result.success) {
+          const { environment, region, loadBalancerIp, vm1Ip, vm2Ip } = result.data;
+          responseDiv.innerHTML = `
+            <div style="color: #27ae60; font-weight: bold; margin-bottom: 15px;">
+              ✅ Deployment Successful!
+            </div>
+            <div style="margin-bottom: 10px;">
+              <strong>Environment:</strong> ${environment}
+            </div>
+            <div style="margin-bottom: 10px;">
+              <strong>Region:</strong> ${region}
+            </div>
+            <div style="margin-bottom: 10px;">
+              <strong>Load Balancer IP:</strong> ${loadBalancerIp}
+            </div>
+            <div style="margin-bottom: 10px;">
+              <strong>VM1 IP:</strong> ${vm1Ip}
+            </div>
+            <div style="margin-bottom: 10px;">
+              <strong>VM2 IP:</strong> ${vm2Ip}
+            </div>
+            <div style="margin-top: 20px;">
+              <button onclick="location.reload()" style="background-color: var(--button-bg); color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer;">
+                Deploy Another
+              </button>
+            </div>
+          `;
+        } else {
+          console.error('Deployment error:', result.error);
+          responseDiv.innerHTML = `
+            <div style="color: #e74c3c; font-weight: bold; margin-bottom: 15px;">
+              ❌ Deployment Failed
+            </div>
+            <div style="color: #e74c3c;">
+              An error occurred during deployment.
+            </div>
+            <div style="margin-top: 20px;">
+              <button onclick="location.reload()" style="background-color: var(--button-bg); color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer;">
+                Try Again
+              </button>
+            </div>
+          `;
+        }
+      } catch (error) {
+        console.error('Network error:', error);
+        responseDiv.innerHTML = `
+          <div style="color: #e74c3c; font-weight: bold; margin-bottom: 15px;">
+            ❌ Network Error
+          </div>
+          <div style="color: #e74c3c;">
+            Failed to connect to server.
+          </div>
+          <div style="margin-top: 20px;">
+            <button onclick="location.reload()" style="background-color: var(--button-bg); color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer;">
+              Try Again
+            </button>
+          </div>
+        `;
+      }
+    });
+  </script>
+</body>
+</html>
