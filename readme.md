@@ -88,3 +88,33 @@ Remove the s from https, so it becomes http
 Example: change https://<your-ip> to http://<your-ip>  
 
 This ensures successful connection to the backend service running on the VM.  
+
+
+# Output Screens  
+**Screen One**     
+
+![](https://github.com/RAJUSKANDPAL/CSI-Azure-IAC/blob/f8b2c7b20aee628ba95d206df697bd4620fda269/sc1.png)  
+
+**Screen Two Step Two - Choose Deployment Region and the Environment**    
+
+![](https://github.com/RAJUSKANDPAL/CSI-Azure-IAC/blob/f8b2c7b20aee628ba95d206df697bd4620fda269/sc2.png)  
+
+**Screen Three**  
+
+![](https://github.com/RAJUSKANDPAL/CSI-Azure-IAC/blob/f8b2c7b20aee628ba95d206df697bd4620fda269/op0.png )  
+
+**Screen Four - Loaad Balancer OP**    
+
+![](https://github.com/RAJUSKANDPAL/CSI-Azure-IAC/blob/f8b2c7b20aee628ba95d206df697bd4620fda269/oplb.png)  
+
+**Screen Five - VM 0 OP**    
+
+![](https://github.com/RAJUSKANDPAL/CSI-Azure-IAC/blob/f8b2c7b20aee628ba95d206df697bd4620fda269/opvm0.png)  
+
+**Screen Six - VM 1 OP**  
+
+![](https://github.com/RAJUSKANDPAL/CSI-Azure-IAC/blob/f8b2c7b20aee628ba95d206df697bd4620fda269/opvm1.png)  
+
+**Screen Seven - Azure Portal**  
+
+![](https://github.com/RAJUSKANDPAL/CSI-Azure-IAC/blob/f8b2c7b20aee628ba95d206df697bd4620fda269/az%20prtl.png)  
